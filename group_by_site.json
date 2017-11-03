@@ -1,0 +1,190 @@
+[
+  {"$unwind": "$Metadata_section/household_data"},
+    {"$match": {"Metadata_section/household_data.Metadata_section/household_data/household_found": "yes"}},
+    {
+        "$addFields": {
+            "p_code": "$Metadata_section/general_info/site_p_code",
+            "p_code_name": "$Metadata_section/general_info/site_p_name",
+            "partner": "$Metadata_section/general_info/partner",
+            "indivisuals": "$Metadata_section/site_data/total_individuals",
+            "tents": "$Metadata_section/site_data/total_tents",
+            "min": "$Metadata_section/site_data/sample_tents_min",
+            "sample": "$Metadata_section/site_data/sample_tents",
+
+            "date": "$Metadata_section/general_info/date",
+            "visit": {"$cond": [{"$eq": ["$Metadata_section/general_info/visit_number", "0"]}, "1", "$Metadata_section/general_info/visit_number"]},
+            "org": "$Metadata_section/general_info/organisation",
+
+            "No Defecation": {"$cond": [{"$eq": ["$Metadata_section/site_data/open_defecation", "yes"]}, 0, 1]},
+            "Clean Environment": {"$cond": [{"$eq": ["$Metadata_section/site_data/clean_environment", "yes"]}, 1, 0]},
+            "No Waste": {
+                "$cond": [
+                    {
+                        "$or": [
+                            {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_sorted"]},
+                            {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_disposed"]}
+                        ]
+                    }, 1, 0]
+            },
+            "FRC result 1": "$Metadata_section/site_data/chlorine_test_result1",
+            "FRC result 2": "$Metadata_section/site_data/chlorine_test_result2",
+            "Health Risks": "$Metadata_section/site_data/site_risks",
+
+
+            "Hands Washed": {
+                "$cond": [
+                    {
+                        "$gte": [
+                            {
+                                "$size": {
+                                    "$ifNull": [
+                                        {"$split": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/hands_washed", " "]}, []
+                                    ]
+                                }
+                            },
+                            3
+                        ]
+                    }, 1, 0]
+            },
+            "Disease Prevention": {
+                "$cond": [
+                    {
+                        "$gte": [
+                            {
+                                "$size": {
+                                    "$ifNull": [
+                                        {"$split": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/prevent_diseases/disease_prevention", " "]}, []
+                                    ]
+                                }
+                            },
+                            2
+                        ]
+                    }, 1, 0]
+            },
+            "Safe Water": {
+                "$cond": [
+                    {
+                        "$eq": [
+                            {
+                                "$size": {
+                                    "$filter": {
+                                        "input": {
+                                            "$ifNull": [
+                                                {"$split": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/water_source/access_to_safe_drinking_water", " "]}, []
+                                            ]
+                                        },
+                                        "as": "source",
+                                        "cond": {"$in": ["$$source", ["not_treated", "irrigation_pipe", "water_trucking_1", "unknown"]]}
+                                    }
+                                }
+                            },
+                            0
+                        ]
+                    }, 1, 0]
+            },
+            "Diseases": {
+                "$cond": [
+                    {"$ne": [
+                            "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/diseases/disease", "none"]
+                    },
+                    "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/diseases/disease", null]
+            },
+            "Clean Latrines": {
+                "$cond": [
+                    {"$eq": [
+                            "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/latrine_cleanliness", "Not_Clean"]
+                    }, 0, 1]
+            }
+        }
+    },
+    {
+        "$group": {
+            "_id": "$_uuid",
+            "p_code": {"$max": "$p_code"},
+            "p_code_name": {"$max": "$p_code_name"},
+
+            "date": {"$max": "$date"},
+            "visit": {"$max": "$visit"},
+            "org": {"$max": "$org"},
+            "partner": {"$max": "$partner"},
+            "indivisuals": {"$max": "$indivisuals"},
+            "total_tents": {"$max": "$tents"},
+            "sample_tents_min": {"$max": "$min"},
+            "sample_tents": {"$max": "$sample"},
+
+            "No Defecation": {"$max": "$No Defecation"},
+            "Clean Environment": {"$max": "$Clean Environment"},
+            "No Waste": {"$max": "$No Waste"},
+            "FRC result 1": {"$max": "$FRC result 1"},
+            "FRC result 2": {"$max": "$FRC result 2"},
+            "Health Risks": {"$max": "$Health Risks"},
+
+            "Diseases": {"$addToSet": "$Diseases"},
+            "Hands Washed": {"$sum": "$Hands Washed"},
+            "Disease Prevention": {"$sum": "$Disease Prevention"},
+            "Safe Water": {"$sum": "$Safe Water"},
+            "Clean Latrines": {"$sum": "$Clean Latrines"},
+
+            "raw_data": { "$push": "$$ROOT" }
+        }
+    },
+    {
+        "$addFields": {
+            "Diseases": {"$setDifference": ["$Diseases", [null]]},
+            "Hands Washed": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Hands Washed"]},
+            "Disease Prevention": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Disease Prevention"]},
+            "Safe Water": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Safe Water"]},
+            "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]}
+         }
+    },
+    {
+        "$addFields": {
+            "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]}
+         }
+    },
+    {
+        "$addFields": {
+            "Report on AI": {"$cond": [{"$gte": ["$Total Score",  80.0]}, "Yes", "No"]}
+         }
+    },
+    {"$sort": {"date": 1}},
+    {
+        "$group": {
+            "_id": "$p_code",
+            "p_code": {"$last": "$p_code"},
+            "p_code_name": {"$last": "$p_code_name"},
+          
+            "date": {"$last": "$date"},
+            "visit": {"$last": "$visit"},
+            "org": {"$last": "$org"},
+            "partner": {"$last": "$partner"},
+            
+            "indivisuals": {"$last": "$indivisuals"},
+            "total_tents": {"$last": "$total_tents"},
+            "sample_tents_min": {"$last": "$sample_tents_min"},
+            "sample_tents": {"$last": "$sample_tents"},
+            "No Defecation": {"$last": "$No Defecation"},
+            "Clean Environment": {"$last": "$Clean Environment"},
+            "No Waste": {"$last": "$No Waste"},
+            "FRC result 1": {"$last": "$FRC result 1"},
+            "FRC result 2": {"$last": "$FRC result 2"},
+            "Health Risks": {"$last": "$Health Risks"},
+
+            "Diseases": {"$last": "$Diseases"},
+            "Hands Washed": {"$last": "$Hands Washed"},
+            "Disease Prevention": {"$last": "$Disease Prevention"},
+            "Safe Water": {"$last": "$Safe Water"},
+            "Clean Latrines": {"$last": "$Clean Latrines"},
+
+            "Total Score": {"$last": "$Total Score"},
+            "Report on AI": {"$last": "$Report on AI"},
+
+            "visits": { "$push": "$$ROOT" }
+        }
+    },
+
+    {
+        "$project": {"_id": 0}
+    },
+    {"$out": "sites"}
+]
