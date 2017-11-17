@@ -1,11 +1,12 @@
 import os
 import datetime
 
-from flask import Flask
+from flask import Flask, redirect
 
 from mongoengine import *
 
 import flask_admin as admin
+from flask_admin import BaseView, expose
 from flask_admin.contrib.mongoengine.filters import FilterEqual
 from flask_mongoengine import MongoEngine
 from flask_admin.form import rules
@@ -184,7 +185,7 @@ admin.add_view(SiteView(Sites))
 # Flask views
 @app.route('/')
 def index():
-    return '<a href="/admin">Click me to get to Admin!</a>'
+    return redirect('/admin')
 
 
 if __name__ == '__main__':
