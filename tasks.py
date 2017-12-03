@@ -47,7 +47,7 @@ def convert_to_integer(
 
 @app.cli.command()
 def run_aggregation(
-        collection='submissions',
+        collection='its',
         file_name='group_by_site'
 ):
     click.echo(db.connection.get_default_database().command(
