@@ -68,9 +68,7 @@ class SiteDetailsMixin(object):
 
 
 class Visits(SiteDetailsMixin, DynamicEmbeddedDocument):
-
-    raw_data = ListField(EmbeddedDocumentField(KoboData))
-
+    pass
 
 class Sites(SiteDetailsMixin, DynamicDocument):
 
@@ -163,7 +161,7 @@ class SiteView(ModelView):
                         'disease_prevention',
                         'total_score',
                         'diseases',
-                        'raw_data',
+                        #'raw_data',
                         #rules.HTML('<hr>')
                     ),
                     'form_widget_args': {
