@@ -13,7 +13,9 @@ def _get_aggreagation(name):
     with open(name + '.json') as json_data:
         return json.load(json_data)
 
-
+@click.argument('password')
+@click.argument('username')
+@click.argument('kobo_id')
 @app.cli.command()
 def import_form_data(
         url='https://kc.humanitarianresponse.info/api/v1/data',
@@ -31,6 +33,7 @@ def import_form_data(
 
     db.connection.get_default_database()[collection].drop()
     db.connection.get_default_database()[collection].insert_many(data.json())
+    click.echo('{} submissions imported from Kobo'.format(len(data.json())))
 
 
 @app.cli.command()
