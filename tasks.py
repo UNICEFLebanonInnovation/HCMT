@@ -59,6 +59,6 @@ def run_aggregation(
         collection,
         pipeline=_get_aggreagation(file_name),
         allowDiskUse=True,
-        cursor={},
+        # cursor={},
         # explain=True
     ))
