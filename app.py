@@ -90,6 +90,7 @@ class SiteView(ModelView):
     column_list = (
         'p_code',
         'p_code_name',
+        'internal_code',
         'date',
         'visit',
         'by',
