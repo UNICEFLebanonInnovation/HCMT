@@ -113,6 +113,7 @@ class SiteView(ModelView):
     column_filters = (
         'p_code',
         'p_code_name',
+        'internal_code',
         'visit',
         'by',
         'total_tents',
