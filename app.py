@@ -42,8 +42,10 @@ class KoboData(DynamicEmbeddedDocument):
 class SiteDetailsMixin(object):
     p_code = StringField()
     p_code_name = StringField()
+    internal_code = StringField()
     date = StringField()
     visit = StringField()
+    governorate = StringField()
     partner = StringField()
     by = StringField(db_field='org')
 
@@ -70,6 +72,7 @@ class SiteDetailsMixin(object):
 class Visits(SiteDetailsMixin, DynamicEmbeddedDocument):
     pass
 
+
 class Sites(SiteDetailsMixin, DynamicDocument):
 
     visits = ListField(EmbeddedDocumentField(Visits))
@@ -91,6 +94,7 @@ class SiteView(ModelView):
         'visit',
         'by',
         'partner',
+        'governorate',
         'total_tents',
         'individuals',
         'min_sample_tents',
@@ -127,6 +131,11 @@ class SiteView(ModelView):
             name='Partner',
             options=[(partner,partner) for partner in Sites.objects.distinct('partner')]
         ),
+        FilterEqual(
+            column=Sites.governorate,
+            name='Governorate',
+            options=[(governorate, governorate) for governorate in Sites.objects.distinct('governorate')]
+        ),
     )
 
     column_searchable_list = (
@@ -136,6 +145,7 @@ class SiteView(ModelView):
         'visit',
         'by',
         'partner',
+        'governorate',
     )
 
     form_subdocuments = {
@@ -147,6 +157,7 @@ class SiteView(ModelView):
                         'date',
                         'visit',
                         'partner',
+                        'governorate',
                         'by',
                         'individuals',
                         'total_tents',
@@ -174,11 +185,13 @@ class SiteView(ModelView):
         }
     }
 
+
 # Create admin
 admin = admin.Admin(app, 'Healthy Camp Monitoring Tool')
 
 # Add views
 admin.add_view(SiteView(Sites))
+
 
 # Flask views
 @app.route('/')

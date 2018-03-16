@@ -10,8 +10,9 @@ from app import app, db
 
 
 def _get_aggreagation(name):
-    with open(name + '.json') as json_data:
+    with open('group_by_site.json') as json_data:
         return json.load(json_data)
+
 
 @click.argument('password')
 @click.argument('username')
@@ -41,7 +42,7 @@ def convert_to_integer(
         collection='submissions',
         field_name='Metadata_section/site_data/sample_tents'
 ):
-    for form in  db.connection.get_default_database()[collection].find():
+    for form in db.connection.get_default_database()[collection].find():
         if field_name not in form:
             continue
         form[field_name] = int(form[field_name])
@@ -57,5 +58,7 @@ def run_aggregation(
         'aggregate',
         collection,
         pipeline=_get_aggreagation(file_name),
-        allowDiskUse=True
+        allowDiskUse=True,
+        cursor={},
+        # explain=True
     ))
