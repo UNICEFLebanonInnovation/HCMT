@@ -65,6 +65,7 @@ class SiteDetailsMixin(object):
     diseases = ListField(StringField(), db_field='Diseases')
 
     total_score = DecimalField(db_field='Total Score')
+    gbv_score = DecimalField(db_field='GBV')
 
     report = StringField(db_field='Report on AI')
 
@@ -107,6 +108,7 @@ class SiteView(ModelView):
         'clean_latrines',
         'disease_prevention',
         'total_score',
+        'gbv_score',
         'report'
     )
 
@@ -127,6 +129,7 @@ class SiteView(ModelView):
         'clean_latrines',
         'disease_prevention',
         'total_score',
+        'gbv_score',
         'report',
         FilterEqual(
             column=Sites.partner,

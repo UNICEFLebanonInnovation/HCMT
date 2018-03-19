@@ -96,6 +96,24 @@
                   {"$eq": [
                           "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/latrine_cleanliness", "Not_Clean"]
                   }, 0, 1]
+          },
+          "sanitation_safty_always": {
+              "$cond": [
+                  {"$eq": [
+                          "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "always"]
+                  }, 1, 0]
+          },
+          "sanitation_safty_sometime": {
+              "$cond": [
+                  {"$eq": [
+                          "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "sometime"]
+                  }, 1, 0]
+          },
+          "sanitation_safty_all_time": {
+              "$cond": [
+                  {"$eq": [
+                          "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "all_time"]
+                  }, 1, 0]
           }
       }
   },
@@ -128,6 +146,10 @@
           "Disease Prevention": {"$sum": "$Disease Prevention"},
           "Safe Water": {"$sum": "$Safe Water"},
           "Clean Latrines": {"$sum": "$Clean Latrines"},
+
+          "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
+          "sanitation_safty_sometime": {"$sum": "$sanitation_safty_sometime"},
+          "sanitation_safty_all_time": {"$sum": "$sanitation_safty_all_time"},
 
           "raw_data": { "$push": "$$ROOT" }
       }
@@ -162,6 +184,10 @@
           "Safe Water": {"$sum": "$Safe Water"},
           "Clean Latrines": {"$sum": "$Clean Latrines"},
 
+          "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
+          "sanitation_safty_sometime": {"$sum": "$sanitation_safty_sometime"},
+          "sanitation_safty_all_time": {"$sum": "$sanitation_safty_all_time"},
+
           "raw_data": { "$addToSet": "$raw_data" }
       }
   },
@@ -171,12 +197,17 @@
           "Hands Washed": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Hands Washed"]},
           "Disease Prevention": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Disease Prevention"]},
           "Safe Water": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Safe Water"]},
-          "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]}
+          "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]},
+
+          "sanitation_safty_always": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
+          "sanitation_safty_sometime": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime"]},
+          "sanitation_safty_all_time": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]}
        }
   },
   {
       "$addFields": {
-          "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]}
+          "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]},
+          "GBV": {"$avg": ["$sanitation_safty_always", "$sanitation_safty_sometime", "$sanitation_safty_all_time"]}
        }
   },
   {
@@ -216,6 +247,8 @@
           "Clean Latrines": {"$last": "$Clean Latrines"},
 
           "Total Score": {"$last": "$Total Score"},
+          "GBV": {"$last": "$GBV"},
+          "sanitation_safty": {"$last": "$sanitation_safty"},
           "Report on AI": {"$last": "$Report on AI"},
 
           "visits": { "$push": "$$ROOT" }
