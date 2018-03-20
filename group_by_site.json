@@ -3,7 +3,9 @@
   {"$match": {"Metadata_section/household_data.Metadata_section/household_data/household_found": "yes"}},
   {
       "$addFields": {
-          "p_code": "$Metadata_section/general_info/site_p_code",
+          "p_code": {
+              "$ifNull": ["$Metadata_section/general_info/site_p_code", "$Metadata_section/general_info/internal_code"]
+          },
           "p_code_name": "$Metadata_section/general_info/site_p_name",
           "governorate": "$Metadata_section/general_info/Governorate",
           "internal_code": "$Metadata_section/general_info/internal_code",
@@ -199,15 +201,15 @@
           "Safe Water": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Safe Water"]},
           "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]},
 
-          "sanitation_safty_always": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
-          "sanitation_safty_sometime": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime"]},
-          "sanitation_safty_all_time": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]}
+          "sanitation_safty_always_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
+          "sanitation_safty_sometime_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime"]},
+          "sanitation_safty_all_time_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]}
        }
   },
   {
       "$addFields": {
           "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]},
-          "GBV": {"$avg": ["$sanitation_safty_always", "$sanitation_safty_sometime", "$sanitation_safty_all_time"]}
+          "GBV": {"$avg": ["$sanitation_safty_always_per", "$sanitation_safty_sometime_per", "$sanitation_safty_all_time_per"]}
        }
   },
   {
@@ -247,6 +249,14 @@
           "Clean Latrines": {"$last": "$Clean Latrines"},
 
           "Total Score": {"$last": "$Total Score"},
+          "sanitation_safty_always": {"$last": "$sanitation_safty_always"},
+          "sanitation_safty_sometime": {"$last": "$sanitation_safty_sometime"},
+          "sanitation_safty_all_time": {"$last": "$sanitation_safty_all_time"},
+
+          "sanitation_safty_always_per": {"$last": "$sanitation_safty_always_per"},
+          "sanitation_safty_sometime_per": {"$last": "$sanitation_safty_sometime_per"},
+          "sanitation_safty_all_time_per": {"$last": "$sanitation_safty_all_time_per"},
+
           "GBV": {"$last": "$GBV"},
           "sanitation_safty": {"$last": "$sanitation_safty"},
           "Report on AI": {"$last": "$Report on AI"},

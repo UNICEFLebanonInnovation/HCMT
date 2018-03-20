@@ -65,7 +65,16 @@ class SiteDetailsMixin(object):
     diseases = ListField(StringField(), db_field='Diseases')
 
     total_score = DecimalField(db_field='Total Score')
-    gbv_score = DecimalField(db_field='GBV')
+
+    sanitation_safty_always = IntField(db_field='sanitation_safty_always')
+    sanitation_safty_sometime = IntField(db_field='sanitation_safty_sometime')
+    sanitation_safty_all_time = IntField(db_field='sanitation_safty_all_time')
+
+    sanitation_safty_always_per = DecimalField(db_field='sanitation_safty_always_per')
+    sanitation_safty_sometime_per = DecimalField(db_field='sanitation_safty_sometime_per')
+    sanitation_safty_all_time_per = DecimalField(db_field='sanitation_safty_all_time_per')
+
+    gbv_score = IntField(db_field='GBV')
 
     report = StringField(db_field='Report on AI')
 
@@ -84,8 +93,8 @@ class SiteView(ModelView):
     can_create = False
     can_delete = False
     can_export = True
-    # can_edit = False
-    # can_view_details = True
+    can_edit = False
+    can_view_details = True
     page_size = 50
 
     column_list = (
@@ -108,6 +117,12 @@ class SiteView(ModelView):
         'clean_latrines',
         'disease_prevention',
         'total_score',
+        'sanitation_safty_always',
+        'sanitation_safty_always_per',
+        'sanitation_safty_sometime',
+        'sanitation_safty_sometime_per',
+        'sanitation_safty_all_time',
+        'sanitation_safty_all_time_per',
         'gbv_score',
         'report'
     )
