@@ -8,7 +8,6 @@
           },
           "p_code_name": "$Metadata_section/general_info/site_p_name",
           "governorate": "$Metadata_section/general_info/Governorate",
-          "internal_code": "$Metadata_section/general_info/internal_code",
           "partner": "$Metadata_section/general_info/partner",
           "indivisuals": "$Metadata_section/site_data/total_individuals",
           "tents": "$Metadata_section/site_data/total_tents",
@@ -129,7 +128,6 @@
           "visit": {"$max": "$visit"},
           "org": {"$max": "$org"},
           "governorate": {"$max": "$governorate"},
-          "internal_code": {"$max": "$internal_code"},
           "partner": {"$max": "$partner"},
           "indivisuals": {"$max": "$indivisuals"},
           "total_tents": {"$max": "$tents"},
@@ -166,7 +164,6 @@
           "visit": {"$max": "$visit"},
           "org": {"$max": "$org"},
           "governorate": {"$max": "$governorate"},
-          "internal_code": {"$max": "$internal_code"},
           "partner": {"$max": "$partner"},
           "indivisuals": {"$max": "$indivisuals"},
           "total_tents": {"$max": "$total_tents"},
@@ -203,7 +200,9 @@
 
           "sanitation_safty_always_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
           "sanitation_safty_sometime_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime"]},
-          "sanitation_safty_all_time_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]}
+          "sanitation_safty_all_time_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]},
+
+          "GBV_total": {"$sum": ["$sanitation_safty_always", "$sanitation_safty_sometime", "$sanitation_safty_all_time"]}
        }
   },
   {
@@ -228,7 +227,6 @@
           "visit": {"$last": "$visit"},
           "org": {"$last": "$org"},
           "governorate": {"$last": "$governorate"},
-          "internal_code": {"$last": "$internal_code"},
           "partner": {"$last": "$partner"},
 
           "indivisuals": {"$last": "$indivisuals"},
@@ -249,15 +247,9 @@
           "Clean Latrines": {"$last": "$Clean Latrines"},
 
           "Total Score": {"$last": "$Total Score"},
-          "sanitation_safty_always": {"$last": "$sanitation_safty_always"},
-          "sanitation_safty_sometime": {"$last": "$sanitation_safty_sometime"},
-          "sanitation_safty_all_time": {"$last": "$sanitation_safty_all_time"},
-
-          "sanitation_safty_always_per": {"$last": "$sanitation_safty_always_per"},
-          "sanitation_safty_sometime_per": {"$last": "$sanitation_safty_sometime_per"},
-          "sanitation_safty_all_time_per": {"$last": "$sanitation_safty_all_time_per"},
 
           "GBV": {"$last": "$GBV"},
+          "GBV_total": {"$last": "$GBV_total"},
           "sanitation_safty": {"$last": "$sanitation_safty"},
           "Report on AI": {"$last": "$Report on AI"},
 

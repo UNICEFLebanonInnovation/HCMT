@@ -40,9 +40,8 @@ class KoboData(DynamicEmbeddedDocument):
 
 
 class SiteDetailsMixin(object):
-    p_code = StringField()
+    p_code_internal_code = StringField(db_field='p_code')
     p_code_name = StringField()
-    internal_code = StringField()
     date = StringField()
     visit = StringField()
     governorate = StringField()
@@ -66,14 +65,7 @@ class SiteDetailsMixin(object):
 
     total_score = DecimalField(db_field='Total Score')
 
-    sanitation_safty_always = IntField(db_field='sanitation_safty_always')
-    sanitation_safty_sometime = IntField(db_field='sanitation_safty_sometime')
-    sanitation_safty_all_time = IntField(db_field='sanitation_safty_all_time')
-
-    sanitation_safty_always_per = DecimalField(db_field='sanitation_safty_always_per')
-    sanitation_safty_sometime_per = DecimalField(db_field='sanitation_safty_sometime_per')
-    sanitation_safty_all_time_per = DecimalField(db_field='sanitation_safty_all_time_per')
-
+    gbv_total = IntField(db_field='GBV_total')
     gbv_score = IntField(db_field='GBV')
 
     report = StringField(db_field='Report on AI')
@@ -98,9 +90,8 @@ class SiteView(ModelView):
     page_size = 50
 
     column_list = (
-        'p_code',
+        'p_code_internal_code',
         'p_code_name',
-        'internal_code',
         'date',
         'visit',
         'by',
@@ -117,20 +108,14 @@ class SiteView(ModelView):
         'clean_latrines',
         'disease_prevention',
         'total_score',
-        'sanitation_safty_always',
-        'sanitation_safty_always_per',
-        'sanitation_safty_sometime',
-        'sanitation_safty_sometime_per',
-        'sanitation_safty_all_time',
-        'sanitation_safty_all_time_per',
+        'gbv_total',
         'gbv_score',
         'report'
     )
 
     column_filters = (
-        'p_code',
+        'p_code_internal_code',
         'p_code_name',
-        'internal_code',
         'visit',
         'by',
         'total_tents',
@@ -144,6 +129,7 @@ class SiteView(ModelView):
         'clean_latrines',
         'disease_prevention',
         'total_score',
+        'gbv_total',
         'gbv_score',
         'report',
         FilterEqual(
@@ -159,7 +145,7 @@ class SiteView(ModelView):
     )
 
     column_searchable_list = (
-        'p_code',
+        'p_code_internal_code',
         'p_code_name',
         'date',
         'visit',
