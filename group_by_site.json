@@ -18,8 +18,10 @@
           "visit": {"$cond": [{"$eq": ["$Metadata_section/general_info/visit_number", "0"]}, "1", "$Metadata_section/general_info/visit_number"]},
           "org": "$Metadata_section/general_info/organisation",
 
-          "No Defecation": {"$cond": [{"$eq": ["$Metadata_section/site_data/open_defecation", "yes"]}, 0, 1]},
-          "Clean Environment": {"$cond": [{"$eq": ["$Metadata_section/site_data/clean_environment", "yes"]}, 1, 0]},
+          "No Defecation score": {"$cond": [{"$eq": ["$Metadata_section/site_data/open_defecation", "yes"]}, 180, 0]},
+          "Free of Open Defecation": {"$cond": [{"$eq": ["$Metadata_section/site_data/open_defecation", "yes"]}, "Yes", "No"]},
+          "Clean Environment": {"$cond": [{"$eq": ["$Metadata_section/site_data/clean_environment", "yes"]}, "Yes", "No"]},
+          "Clean Environment score": {"$cond": [{"$eq": ["$Metadata_section/site_data/clean_environment", "yes"]}, 60, 0]},
           "No Waste": {
               "$cond": [
                   {
@@ -27,7 +29,16 @@
                           {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_sorted"]},
                           {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_disposed"]}
                       ]
-                  }, 1, 0]
+                  }, "Yes", "No"]
+          },
+          "No Waste score": {
+              "$cond": [
+                  {
+                      "$or": [
+                          {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_sorted"]},
+                          {"$eq": ["$Metadata_section/site_data/solid_waste_disposal", "waste_is_disposed"]}
+                      ]
+                  }, 60, 0]
           },
           "FRC result 1": "$Metadata_section/site_data/chlorine_test_result1",
           "FRC result 2": "$Metadata_section/site_data/chlorine_test_result2",
@@ -134,9 +145,12 @@
           "sample_tents_min": {"$max": "$min"},
           "sample_tents": {"$max": "$sample"},
 
-          "No Defecation": {"$max": "$No Defecation"},
+          "No Defecation score": {"$max": "$No Defecation score"},
+          "Free of Open Defecation": {"$max": "$Free of Open Defecation"},
           "Clean Environment": {"$max": "$Clean Environment"},
+          "Clean Environment score": {"$max": "$Clean Environment score"},
           "No Waste": {"$max": "$No Waste"},
+          "No Waste score": {"$max": "$No Waste score"},
           "FRC result 1": {"$max": "$FRC result 1"},
           "FRC result 2": {"$max": "$FRC result 2"},
           "Health Risks": {"$max": "$Health Risks"},
@@ -170,9 +184,12 @@
           "sample_tents_min": {"$max": "$sample_tents_min"},
           "sample_tents": {"$max": "$sample_tents"},
 
-          "No Defecation": {"$max": "$No Defecation"},
+          "No Defecation score": {"$max": "$No Defecation score"},
+          "Free of Open Defecation": {"$max": "$Free of Open Defecation"},
           "Clean Environment": {"$max": "$Clean Environment"},
+          "Clean Environment score": {"$max": "$Clean Environment score"},
           "No Waste": {"$max": "$No Waste"},
+          "No Waste score": {"$max": "$No Waste score"},
           "FRC result 1": {"$max": "$FRC result 1"},
           "FRC result 2": {"$max": "$FRC result 2"},
           "Health Risks": {"$max": "$Health Risks"},
@@ -207,7 +224,9 @@
   },
   {
       "$addFields": {
-          "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]},
+          "Household Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]},
+          "Site Score": {"$avg": ["$No Waste score", "$Clean Environment score", "$No Defecation score"]},
+          "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines", "$No Waste score", "$Clean Environment score", "$No Defecation score"]},
           "GBV": {"$avg": ["$sanitation_safty_always_per", "$sanitation_safty_sometime_per", "$sanitation_safty_all_time_per"]}
        }
   },
@@ -233,9 +252,12 @@
           "total_tents": {"$last": "$total_tents"},
           "sample_tents_min": {"$last": "$sample_tents_min"},
           "sample_tents": {"$last": "$sample_tents"},
-          "No Defecation": {"$last": "$No Defecation"},
+          "No Defecation score": {"$last": "$No Defecation score"},
+          "Free of Open Defecation": {"$last": "$Free of Open Defecation"},
           "Clean Environment": {"$last": "$Clean Environment"},
+          "Clean Environment score": {"$last": "$Clean Environment score"},
           "No Waste": {"$last": "$No Waste"},
+          "No Waste score": {"$last": "$No Waste score"},
           "FRC result 1": {"$last": "$FRC result 1"},
           "FRC result 2": {"$last": "$FRC result 2"},
           "Health Risks": {"$last": "$Health Risks"},
@@ -246,6 +268,8 @@
           "Safe Water": {"$last": "$Safe Water"},
           "Clean Latrines": {"$last": "$Clean Latrines"},
 
+          "Household Score": {"$last": "$Household Score"},
+          "Site Score": {"$last": "$Site Score"},
           "Total Score": {"$last": "$Total Score"},
 
           "GBV": {"$last": "$GBV"},

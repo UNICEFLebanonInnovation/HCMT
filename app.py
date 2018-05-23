@@ -53,9 +53,9 @@ class SiteDetailsMixin(object):
     min_sample_tents = IntField(db_field='sample_tents_min')
     actual_tents_sampled = IntField(db_field='sample_tents')
 
-    no_defecation = BooleanField(db_field='No Defecation')
-    clean_environment = BooleanField(db_field='Clean Environment')
-    no_solid_waste = BooleanField(db_field='No Waste')
+    open_defecation = StringField(db_field='Free of Open Defecation')
+    clean_environment = StringField(db_field='Clean Environment')
+    no_solid_waste = StringField(db_field='No Waste')
 
     safe_water = DecimalField(db_field='Safe Water')
     hands_washed = DecimalField(db_field='Hands Washed')
@@ -63,6 +63,8 @@ class SiteDetailsMixin(object):
     disease_prevention = DecimalField(db_field='Disease Prevention')
     diseases = ListField(StringField(), db_field='Diseases')
 
+    household_score = DecimalField(db_field='Household Score')
+    site_score = DecimalField(db_field='Site Score')
     total_score = DecimalField(db_field='Total Score')
 
     gbv_total = IntField(db_field='GBV_total')
@@ -100,17 +102,19 @@ class SiteView(ModelView):
         'total_tents',
         'individuals',
         'min_sample_tents',
-        'no_defecation',
+        'open_defecation',
         'clean_environment',
         'no_solid_waste',
+        'site_score',
         'safe_water',
         'hands_washed',
         'clean_latrines',
         'disease_prevention',
+        'household_score',
         'total_score',
         'gbv_total',
         'gbv_score',
-        'report'
+        'report',
     )
 
     column_filters = (
@@ -121,13 +125,15 @@ class SiteView(ModelView):
         'total_tents',
         'individuals',
         'min_sample_tents',
-        'no_defecation',
+        'open_defecation',
         'clean_environment',
         'no_solid_waste',
         'safe_water',
         'hands_washed',
         'clean_latrines',
         'disease_prevention',
+        'site_score',
+        'household_score',
         'total_score',
         'gbv_total',
         'gbv_score',
@@ -169,7 +175,7 @@ class SiteView(ModelView):
                         'total_tents',
                         'min_sample_tents',
                         'actual_tents_sampled',
-                        'no_defecation',
+                        'open_defecation',
                         'clean_environment',
                         'no_solid_waste',
                         'safe_water',
