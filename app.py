@@ -53,7 +53,7 @@ class SiteDetailsMixin(object):
     min_sample_tents = IntField(db_field='sample_tents_min')
     actual_tents_sampled = IntField(db_field='sample_tents')
 
-    open_defecation = StringField(db_field='Free of Open Defecation')
+    free_of_open_defecation = StringField(db_field='Free of Open Defecation')
     clean_environment = StringField(db_field='Clean Environment')
     no_solid_waste = StringField(db_field='No Waste')
 
@@ -67,8 +67,8 @@ class SiteDetailsMixin(object):
     site_score = DecimalField(db_field='Site Score')
     total_score = DecimalField(db_field='Total Score')
 
-    gbv_total = IntField(db_field='GBV_total')
-    gbv_score = IntField(db_field='GBV')
+    gbv_number = IntField(db_field='GBV_total')
+    gbv_score_percentage = IntField(db_field='GBV')
 
     report = StringField(db_field='Report on AI')
 
@@ -102,7 +102,7 @@ class SiteView(ModelView):
         'total_tents',
         'individuals',
         'min_sample_tents',
-        'open_defecation',
+        'free_of_open_defecation',
         'clean_environment',
         'no_solid_waste',
         'site_score',
@@ -112,8 +112,8 @@ class SiteView(ModelView):
         'disease_prevention',
         'household_score',
         'total_score',
-        'gbv_total',
-        'gbv_score',
+        'gbv_number',
+        'gbv_score_percentage',
         'report',
     )
 
@@ -125,7 +125,7 @@ class SiteView(ModelView):
         'total_tents',
         'individuals',
         'min_sample_tents',
-        'open_defecation',
+        'free_of_open_defecation',
         'clean_environment',
         'no_solid_waste',
         'safe_water',
@@ -135,8 +135,8 @@ class SiteView(ModelView):
         'site_score',
         'household_score',
         'total_score',
-        'gbv_total',
-        'gbv_score',
+        'gbv_number',
+        'gbv_score_percentage',
         'report',
         FilterEqual(
             column=Sites.partner,
@@ -175,7 +175,7 @@ class SiteView(ModelView):
                         'total_tents',
                         'min_sample_tents',
                         'actual_tents_sampled',
-                        'open_defecation',
+                        'free_of_open_defecation',
                         'clean_environment',
                         'no_solid_waste',
                         'safe_water',
