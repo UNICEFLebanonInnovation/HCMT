@@ -70,6 +70,8 @@ class SiteDetailsMixin(object):
     gbv_number = IntField(db_field='GBV_total')
     gbv_number_female = IntField(db_field='GBV_total_female')
     gbv_number_male = IntField(db_field='GBV_total_male')
+    gbv_number_female_negative = IntField(db_field='GBV_total_female_negative')
+    gbv_number_male_negative = IntField(db_field='GBV_total_male_negative')
     gbv_score_percentage = IntField(db_field='GBV')
     gbv_score_percentage_female = IntField(db_field='GBV_female')
     gbv_score_percentage_male = IntField(db_field='GBV_male')
@@ -119,6 +121,8 @@ class SiteView(ModelView):
         'gbv_number',
         'gbv_number_female',
         'gbv_number_male',
+        'gbv_number_female_negative',
+        'gbv_number_male_negative',
         'gbv_score_percentage',
         'gbv_score_percentage_female',
         'gbv_score_percentage_male',
@@ -146,6 +150,8 @@ class SiteView(ModelView):
         'gbv_number',
         'gbv_number_female',
         'gbv_number_male',
+        'gbv_number_female_negative',
+        'gbv_number_male_negative',
         'gbv_score_percentage',
         'gbv_score_percentage_female',
         'gbv_score_percentage_male',
