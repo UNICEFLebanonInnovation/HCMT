@@ -115,16 +115,70 @@
                           "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "always"]
                   }, 1, 0]
           },
+          "sanitation_safty_always_male": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "always"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "male"]}
+                        ]
+                  }, 1, 0]
+          },
+          "sanitation_safty_always_female": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "always"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "female"]}
+                        ]
+                  }, 1, 0]
+          },
           "sanitation_safty_sometime": {
               "$cond": [
                   {"$eq": [
                           "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "sometime"]
                   }, 1, 0]
           },
+          "sanitation_safty_sometime_male": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "sometime"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "male"]}
+                        ]
+                  }, 1, 0]
+          },
+          "sanitation_safty_sometime_female": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "sometime"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "female"]}
+                        ]
+                  }, 1, 0]
+          },
           "sanitation_safty_all_time": {
               "$cond": [
                   {"$eq": [
                           "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "all_time"]
+                  }, 1, 0]
+          },
+          "sanitation_safty_all_time_male": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "all_time"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "male"]}
+                        ]
+                  }, 1, 0]
+          },
+          "sanitation_safty_all_time_female": {
+              "$cond": [
+                  {
+                      "$and": [
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/sanitation_safty", "all_time"]},
+                                {"$eq": ["$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/hand_washing/gender_respondent", "female"]}
+                        ]
                   }, 1, 0]
           }
       }
@@ -162,8 +216,14 @@
           "Clean Latrines": {"$sum": "$Clean Latrines"},
 
           "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
+          "sanitation_safty_always_female": {"$sum": "$sanitation_safty_always_female"},
+          "sanitation_safty_always_male": {"$sum": "$sanitation_safty_always_male"},
           "sanitation_safty_sometime": {"$sum": "$sanitation_safty_sometime"},
+          "sanitation_safty_sometime_female": {"$sum": "$sanitation_safty_sometime_female"},
+          "sanitation_safty_sometime_male": {"$sum": "$sanitation_safty_sometime_male"},
           "sanitation_safty_all_time": {"$sum": "$sanitation_safty_all_time"},
+          "sanitation_safty_all_time_female": {"$sum": "$sanitation_safty_all_time_female"},
+          "sanitation_safty_all_time_male": {"$sum": "$sanitation_safty_all_time_male"},
 
           "raw_data": { "$push": "$$ROOT" }
       }
@@ -201,8 +261,14 @@
           "Clean Latrines": {"$sum": "$Clean Latrines"},
 
           "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
+          "sanitation_safty_always_female": {"$sum": "$sanitation_safty_always_female"},
+          "sanitation_safty_always_male": {"$sum": "$sanitation_safty_always_male"},
           "sanitation_safty_sometime": {"$sum": "$sanitation_safty_sometime"},
+          "sanitation_safty_sometime_female": {"$sum": "$sanitation_safty_sometime_female"},
+          "sanitation_safty_sometime_male": {"$sum": "$sanitation_safty_sometime_male"},
           "sanitation_safty_all_time": {"$sum": "$sanitation_safty_all_time"},
+          "sanitation_safty_all_time_female": {"$sum": "$sanitation_safty_all_time_female"},
+          "sanitation_safty_all_time_male": {"$sum": "$sanitation_safty_all_time_male"},
 
           "raw_data": { "$addToSet": "$raw_data" }
       }
@@ -216,10 +282,18 @@
           "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]},
 
           "sanitation_safty_always_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
+          "sanitation_safty_always_female_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always_female"]},
+          "sanitation_safty_always_male_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always_male"]},
           "sanitation_safty_sometime_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime"]},
+          "sanitation_safty_sometime_female_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime_female"]},
+          "sanitation_safty_sometime_male_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_sometime_male"]},
           "sanitation_safty_all_time_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time"]},
+          "sanitation_safty_all_time_female_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time_female"]},
+          "sanitation_safty_all_time_male_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_all_time_male"]},
 
-          "GBV_total": {"$sum": ["$sanitation_safty_always", "$sanitation_safty_sometime", "$sanitation_safty_all_time"]}
+          "GBV_total": {"$sum": ["$sanitation_safty_always", "$sanitation_safty_sometime", "$sanitation_safty_all_time"]},
+          "GBV_total_female": {"$sum": ["$sanitation_safty_always_female", "$sanitation_safty_sometime_female", "$sanitation_safty_all_time_female"]},
+          "GBV_total_male": {"$sum": ["$sanitation_safty_always_male", "$sanitation_safty_sometime_male", "$sanitation_safty_all_time_male"]}
        }
   },
   {
@@ -227,7 +301,9 @@
           "Household Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines"]},
           "Site Score": {"$avg": ["$No Waste score", "$Clean Environment score", "$No Defecation score"]},
           "Total Score": {"$avg": ["$Hands Washed", "$Disease Prevention", "$Safe Water", "$Clean Latrines", "$No Waste score", "$Clean Environment score", "$No Defecation score"]},
-          "GBV": {"$avg": ["$sanitation_safty_always_per", "$sanitation_safty_sometime_per", "$sanitation_safty_all_time_per"]}
+          "GBV": {"$avg": ["$sanitation_safty_always_per", "$sanitation_safty_sometime_per", "$sanitation_safty_all_time_per"]},
+          "GBV_female": {"$avg": ["$sanitation_safty_always_female_per", "$sanitation_safty_sometime_female_per", "$sanitation_safty_all_time_female_per"]},
+          "GBV_male": {"$avg": ["$sanitation_safty_always_male_per", "$sanitation_safty_sometime_male_per", "$sanitation_safty_all_time_male_per"]}
        }
   },
   {
@@ -273,7 +349,11 @@
           "Total Score": {"$last": "$Total Score"},
 
           "GBV": {"$last": "$GBV"},
+          "GBV_female": {"$last": "$GBV_female"},
+          "GBV_male": {"$last": "$GBV_male"},
           "GBV_total": {"$last": "$GBV_total"},
+          "GBV_total_female": {"$last": "$GBV_total_female"},
+          "GBV_total_male": {"$last": "$GBV_total_male"},
           "sanitation_safty": {"$last": "$sanitation_safty"},
           "Report on AI": {"$last": "$Report on AI"},
 

@@ -68,7 +68,11 @@ class SiteDetailsMixin(object):
     total_score = DecimalField(db_field='Total Score')
 
     gbv_number = IntField(db_field='GBV_total')
+    gbv_number_female = IntField(db_field='GBV_total_female')
+    gbv_number_male = IntField(db_field='GBV_total_male')
     gbv_score_percentage = IntField(db_field='GBV')
+    gbv_score_percentage_female = IntField(db_field='GBV_female')
+    gbv_score_percentage_male = IntField(db_field='GBV_male')
 
     report = StringField(db_field='Report on AI')
 
@@ -113,7 +117,11 @@ class SiteView(ModelView):
         'household_score',
         'total_score',
         'gbv_number',
+        'gbv_number_female',
+        'gbv_number_male',
         'gbv_score_percentage',
+        'gbv_score_percentage_female',
+        'gbv_score_percentage_male',
         'report',
     )
 
@@ -136,7 +144,11 @@ class SiteView(ModelView):
         'household_score',
         'total_score',
         'gbv_number',
+        'gbv_number_female',
+        'gbv_number_male',
         'gbv_score_percentage',
+        'gbv_score_percentage_female',
+        'gbv_score_percentage_male',
         'report',
         FilterEqual(
             column=Sites.partner,
