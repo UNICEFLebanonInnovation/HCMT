@@ -115,6 +115,7 @@ class SiteView(ModelView):
         'safe_water',
         'hands_washed',
         'clean_latrines',
+        'diseases',
         'disease_prevention',
         'household_score',
         'total_score',
