@@ -109,6 +109,18 @@
                           "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/latrine_cleanliness", "Not_Clean"]
                   }, 0, 1]
           },
+          "Locked Latrines": {
+              "$cond": [
+                  {"$eq": [
+                          "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/latrine_lock", "yes"]
+                  }, 0, 1]
+          },
+          "Lighted Latrines": {
+              "$cond": [
+                  {"$eq": [
+                          "$Metadata_section/household_data.Metadata_section/household_data/household_found_yes/latrines/latrine_light", "yes"]
+                  }, 0, 1]
+          },
           "sanitation_safty_always": {
               "$cond": [
                   {"$eq": [
@@ -250,6 +262,8 @@
           "Disease Prevention": {"$sum": "$Disease Prevention"},
           "Safe Water": {"$sum": "$Safe Water"},
           "Clean Latrines": {"$sum": "$Clean Latrines"},
+          "Locked Latrines": {"$sum": "$Locked Latrines"},
+          "Lighted Latrines": {"$sum": "$Lighted Latrines"},
 
           "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
           "sanitation_safty_always_female": {"$sum": "$sanitation_safty_always_female"},
@@ -299,6 +313,8 @@
           "Disease Prevention": {"$sum": "$Disease Prevention"},
           "Safe Water": {"$sum": "$Safe Water"},
           "Clean Latrines": {"$sum": "$Clean Latrines"},
+          "Locked Latrines": {"$sum": "$Locked Latrines"},
+          "Lighted Latrines": {"$sum": "$Lighted Latrines"},
 
           "sanitation_safty_always": {"$sum": "$sanitation_safty_always"},
           "sanitation_safty_always_female": {"$sum": "$sanitation_safty_always_female"},
@@ -324,6 +340,8 @@
           "Disease Prevention": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Disease Prevention"]},
           "Safe Water": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Safe Water"]},
           "Clean Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Clean Latrines"]},
+          "Locked Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Locked Latrines"]},
+          "Lighted Latrines": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$Lighted Latrines"]},
 
           "sanitation_safty_always_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always"]},
           "sanitation_safty_always_female_per": {"$multiply":[{"$divide":[100,"$sample_tents"]},"$sanitation_safty_always_female"]},
@@ -390,6 +408,8 @@
           "Disease Prevention": {"$last": "$Disease Prevention"},
           "Safe Water": {"$last": "$Safe Water"},
           "Clean Latrines": {"$last": "$Clean Latrines"},
+          "Locked Latrines": {"$last": "$Locked Latrines"},
+          "Lighted Latrines": {"$last": "$Lighted Latrines"},
 
           "Household Score": {"$last": "$Household Score"},
           "Site Score": {"$last": "$Site Score"},

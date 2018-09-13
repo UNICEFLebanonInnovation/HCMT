@@ -60,6 +60,8 @@ class SiteDetailsMixin(object):
     safe_water = DecimalField(db_field='Safe Water')
     hands_washed = DecimalField(db_field='Hands Washed')
     clean_latrines = DecimalField(db_field='Clean Latrines')
+    locked_latrines = DecimalField(db_field='Locked Latrines')
+    lighted_latrines = DecimalField(db_field='Lighted Latrines')
     disease_prevention = DecimalField(db_field='Disease Prevention')
     diseases = ListField(StringField(), db_field='Diseases')
 
@@ -115,6 +117,8 @@ class SiteView(ModelView):
         'safe_water',
         'hands_washed',
         'clean_latrines',
+        'locked_latrines',
+        'lighted_latrines',
         'diseases',
         'disease_prevention',
         'household_score',
@@ -144,6 +148,8 @@ class SiteView(ModelView):
         'safe_water',
         'hands_washed',
         'clean_latrines',
+        'locked_latrines',
+        'lighted_latrines',
         'disease_prevention',
         'site_score',
         'household_score',
@@ -200,6 +206,8 @@ class SiteView(ModelView):
                         'safe_water',
                         'hands_washed',
                         'clean_latrines',
+                        'locked_latrines',
+                        'lighted_latrines',
                         'disease_prevention',
                         'total_score',
                         'diseases',
