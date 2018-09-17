@@ -28,8 +28,11 @@ def import_form_data(
     """Initialize the database."""
     click.echo('Staring import from Kobo...')
 
+    # url = path.join(url, kobo_id)
+    url = path.join(url, kobo_id+'?query={"_submission_time": {"$gt": "2017-12-30T10:42:01"}}')
+
     data = requests.get(
-        path.join(url, kobo_id),
+        url,
         auth=HTTPBasicAuth(username, password))
 
     db.connection.get_default_database()[collection].drop()
