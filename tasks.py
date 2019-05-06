@@ -29,7 +29,7 @@ def import_form_data(
     click.echo('Staring import from Kobo...')
 
     # url = path.join(url, kobo_id)
-    url = path.join(url, kobo_id+'?query={"_submission_time": {"$gt": "2017-12-30T10:42:01"}}')
+    url = path.join(url, kobo_id+'?query={"_submission_time": {"$gt": "2018-12-30T10:42:01"}}')
 
     data = requests.get(
         url,
