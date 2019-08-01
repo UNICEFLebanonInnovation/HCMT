@@ -1,7 +1,7 @@
 import os
 import datetime
 
-from flask import Flask, redirect
+from flask import Flask, redirect, render_template
 
 from mongoengine import *
 
@@ -235,7 +235,8 @@ admin.add_view(SiteView(Sites))
 # Flask views
 @app.route('/')
 def index():
-    return redirect('/admin')
+    # return redirect('/admin')
+    return render_template('index.html')
 
 
 if __name__ == '__main__':

@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>jOrgChart - A jQuery OrgChart Plugin</title>
-    <link rel="stylesheet" href="bootstrap.min.css"/>
-    <link rel="stylesheet" href="jquery.jOrgChart.css"/>
-    <link rel="stylesheet" href="custom.css"/>
-    <link href="css/prettify.css" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="url_for('static', 'bootstrap.min.css')"/>
+    <link rel="stylesheet" href="url_for('static', 'jquery.jOrgChart.css')"/>
+    <link rel="stylesheet" href="url_for('static', 'custom.css')"/>
+    <link href="url_for('static', 'prettify.css')" type="text/css" rel="stylesheet" />
 
-    <script type="text/javascript" src="prettify.js"></script>
+    <script type="text/javascript" src="url_for('static', 'prettify.js')"></script>
     
     <!-- jQuery includes -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
     
-    <script src="jquery.jOrgChart.js"></script>
+    <script src="url_for('static', 'jquery.jOrgChart.js')"></script>
 
     <script>
     jQuery(document).ready(function() {
@@ -29,11 +29,6 @@
         <div class="topbar-inner">
             <div class="container">
                 <a class="brand" href="#">jQuery Organisation Chart</a>
-                <ul class="nav">
-                    <li><a href="http://github.com/wesnolte">Github</a></li>
-                    <li><a href="http://twitter.com/wesnolte">Twitter</a></li>                  
-                    <li><a href="http://th3silverlining.com">Blog</a></li>      
-                </ul>
                 <div class="pull-right">
                     <div class="alert-message info" id="show-list">Show underlying list.</div>
                     
@@ -49,11 +44,11 @@
        <ul>
          <li id="beer">Beer</li>
          <li>Vegetables
-           <a href="http://wesnolte.com" target="_blank">Click me</a>
+           <a href="" target="_blank">Click me</a>
            <ul>
              <li>Pumpkin</li>
              <li>
-                <a href="http://tquila.com" target="_blank">Aubergine</a>
+                <a href="" target="_blank">Aubergine</a>
                 <p>A link and paragraph is all we need.</p>
              </li>
            </ul>
@@ -68,7 +63,7 @@
              <li>Berries
                <ul>
                  <li>Blueberry</li>
-                 <li><img src="images/raspberry.jpg" alt="Raspberry"/></li>
+                 <li><img src="url_for('static', 'raspberry.jpg')" alt="Raspberry"/></li>
                  <li>Cucumber</li>
                </ul>
              </li>
