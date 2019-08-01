@@ -235,8 +235,8 @@ admin.add_view(SiteView(Sites))
 # Flask views
 @app.route('/')
 def index():
-    # return redirect('/admin')
-    return render_template('index.html')
+    return redirect('/admin')
+    # return render_template('index.html')
 
 
 if __name__ == '__main__':
