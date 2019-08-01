@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <title>jOrgChart - A jQuery OrgChart Plugin</title>
-    <link rel="stylesheet" href="url_for('static', 'bootstrap.min.css')"/>
-    <link rel="stylesheet" href="url_for('static', 'jquery.jOrgChart.css')"/>
-    <link rel="stylesheet" href="url_for('static', 'custom.css')"/>
-    <link href="url_for('static', 'prettify.css')" type="text/css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}"/>
+    <link rel="stylesheet" href="{{url_for('static', filename='jquery.jOrgChart.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='custom.css') }}"/>
+    <link href="{{ url_for('static', filename='prettify.css') }}" type="text/css" rel="stylesheet" />
 
-    <script type="text/javascript" src="url_for('static', 'prettify.js')"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='prettify.js') }}"></script>
     
     <!-- jQuery includes -->
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
     
-    <script src="url_for('static', 'jquery.jOrgChart.js')"></script>
+    <script src="{{ url_for('static', filename='jquery.jOrgChart.js') }}"></script>
 
     <script>
     jQuery(document).ready(function() {
@@ -63,7 +63,7 @@
              <li>Berries
                <ul>
                  <li>Blueberry</li>
-                 <li><img src="url_for('static', 'raspberry.jpg')" alt="Raspberry"/></li>
+                 <li><img src="{{ url_for('static', filename='raspberry.jpg') }}" alt="Raspberry"/></li>
                  <li>Cucumber</li>
                </ul>
              </li>
